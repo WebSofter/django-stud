@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  app:
+    container_name: medstat_app
+    restart: always
+    build: .
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=db
+      - DB_PORT=${DB_PORT}
+      - DB_ENGINE=${DB_ENGINE}
+      - SECRET_KEY=${SECRET_KEY}
+      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
+    volumes:
+      - ./app:/usr/src/app/
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    links:
+      - db
+    command: gunicorn --config gunicorn.py core.wsgi
+    networks:
+      - db_network
+      - app_network
+  db:
+    container_name: medstat_mysql
+    image: mysql:8.0
+    restart: always
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_DATABASE=${DB_NAME}
+    ports:
+      - ${DB_PORT}:3306
+    # network_mode: host
+    hostname: localhost
+    networks:
+      - db_network
+
+  phpmyadmin:
+    container_name: medstat_pma
+    depends_on:
+      - db
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      - PMA_HOST=db
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    networks:
+      - db_network
+
+networks:
+  db_network:
+    driver: bridge
+  app_network:
+    driver: bridge
+ 
