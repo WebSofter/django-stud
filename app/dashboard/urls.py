@@ -1,11 +1,24 @@
 from django.urls import path
+from blog import views as blog_views
+from analysis import views as analysis_views
 from dashboard import views
 from django.contrib.auth import views as auth_views
 
-
 urlpatterns = [
     path('', views.index, name='index'),
-    path('blog/', views.blog, name='blog'),
+
+    #blog
+    path('blog/', blog_views.PostViewList, name='blog'),
+    path('blog/create', blog_views.PostViewCreation.as_view(), name='blog_create'),
+    path('blog/<str:slug>', blog_views.PostViewDetail.as_view(), name='blog_detail'),
+    path('blog/<str:slug>/update', blog_views.PostViewUpdation.as_view(), name='blog_update'),
+
+    #analysis
+    path('analysis/', analysis_views.AnalysisViewList, name='analysis'),
+    path('analysis/create', analysis_views.AnalysisViewCreation.as_view(), name='analysis_create'),
+    path('analysis/<int:id>/update', analysis_views.AnalysisViewUpdation.as_view(), name='analysis_update'),
+
+    #
     path('billing/', views.billing, name='billing'),
     path('tables/', views.tables, name='tables'),
     path('vr/', views.vr, name='vr'),

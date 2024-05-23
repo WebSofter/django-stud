@@ -1,7 +1,7 @@
-{% extends "layouts/base.html" %}
+{% extends "./layouts/base.html" %}
 {% load i18n static %}
 
-{% block title %} Profile {% endblock title %}
+{% block title %} Блог {% endblock title %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
         <div class="row gx-4 mb-2">
           <div class="col-auto">
             <div class="avatar avatar-xl position-relative">
-              <img src="{% static 'img/userpic.png' %}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              <img src="{% static './img/userpic.png' %}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
             </div>
           </div>
           <div class="col-auto my-auto">
@@ -42,7 +42,7 @@
                 {% endfor %}
                 <div class="text-center">
                   <button type="submit" name="register" 
-                          class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">{% 'Добавить' %}</button>
+                          class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Добавить</button>
                 </div>         
               </form>
           </div>
@@ -51,7 +51,7 @@
           <div class="row">
             <div class="col-12 col-xl-8">
               <div class="card card-plain h-100">
-                <div class="card-header pb-0 p-3"></div>
+                <div class="card-header p-3"></div>
                 <div class="card-body p-3">
                   <div class="row">
                     {% for post in posts %}
@@ -100,7 +100,7 @@
             </div>
             <div class="col-12 col-xl-4">
               <div class="card card-plain h-100">
-                <div class="card-header pb-0 p-3">
+                <div class="card-header p-3">
                   <h6 class="mb-0">Категории</h6>
                 </div>
                 <div class="card-body p-3">
@@ -126,7 +126,7 @@
         </div>
       </div>
     </div>
-    {% include 'includes/footer.html' %}
+    {% include './includes/footer.html' %}
   </div>
 
   {% endblock content %}

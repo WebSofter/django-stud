@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView, PasswordResetView, PasswordChangeView, PasswordResetConfirmView
 from blog.models import Post, Category
@@ -9,13 +10,6 @@ from django.contrib.auth import logout
 # Pages
 def index(request):
   return render(request, 'pages/index.html', { 'segment': 'index' })
-
-def blog(request):
-  '''вывод записей'''
-  posts = Post.objects.all
-  categories = Category.objects.all
-  # return render (request, 'blog/blog.html', t'post_list': posts})
-  return render(request, 'pages/blog.html', { 'segment': 'blog', 'posts': posts, 'categories': categories })
 
 def billing(request):
   return render(request, 'pages/billing.html', { 'segment': 'billing' })

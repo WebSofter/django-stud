@@ -1,0 +1,67 @@
+{% extends "./layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %} Блог {% endblock title %}
+
+{% block content %}
+    <div class="container-fluid px-2 px-md-4">
+      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
+        <span class="mask  bg-gradient-primary  opacity-6"></span>
+      </div>
+      <div class="row">
+        <div class="col-12 col-xl-8">
+          <div class="card card-plain h-100">
+            <div class="card-header p-3 mt-3">
+              <a href="/analysis/create">
+                <i class="fas fa-plus text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Новый пост"></i> Добавить анализ
+              </a>
+            </div>
+            <div class="card-body p-3">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Вес/кг</th>
+                    <th scope="col">Обхват/см</th>
+                    <th scope="col">Пульс/шт</th>
+                    <th scope="col">Калории/день</th>
+                    <th scope="col">Шаги/день</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Изменить</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for a in analysis %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{a.weight}}</td>
+                      <td>{{a.girth}}</td>
+                      <td>{{a.pulse}}</td>
+                      <td>{{a.calories_pd}}</td>
+                      <td>{{a.steps_pd}}</td>
+                      <td>{{a.date_created}}</td>
+                      <td class="text-right">
+                        {% if request.user.is_authenticated %}
+                        <a href="{{a.id}}/update">
+                          <i class="fas fa-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Изменить"></i>
+                        </a>
+                        {% else %}
+                        Нет доступа
+                        {% endif %}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-xl-4">
+
+        </div>
+      </div>
+    </div>
+    {% include './includes/footer.html' %}
+  </div>
+
+  {% endblock content %}
