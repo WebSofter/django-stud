@@ -4,7 +4,6 @@ from django.urls import reverse
 from django.conf import settings
 from django.utils.text import slugify
 from django.contrib.auth.models import User
-from PIL import Image
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True,)

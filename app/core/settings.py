@@ -54,7 +54,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
-    'django_seed',
+    # 'django_seed',
     'dashboard.apps.AdminMaterialDashboardConfig',
     "django.contrib.admin",
     "django.contrib.auth",
