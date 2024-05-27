@@ -44,16 +44,20 @@
               </div>
               <div class="card-body p-3">
                 <ul class="list-group">
-                  {% for user in users %}
+                  {% for prfile in profiles %}
                   <li class="list-group-item border-0 d-flex align-items-center px-0 mb-2 pt-0">
                     <div class="avatar me-3">
-                      <img src="{% static 'img/kal-visuals-square.jpg' %}" alt="kal" class="border-radius-lg shadow">
+                      {% if prfile.photo == 'userpic.png' %}
+                        <img src="{% static 'img' %}/{{prfile.photo}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                      {% else %}
+                        <img src="/media/{{prfile.photo}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+                      {% endif %}
                     </div>
                     <div class="d-flex align-items-start flex-column justify-content-center">
-                      <h6 class="mb-0 text-sm">{{user.first_name}} {{user.first_name |slice:"1"}}</h6>
-                      <p class="mb-0 text-xs">{{user.email}}</p>
+                      <h6 class="mb-0 text-sm">{{prfile.user.first_name}} {{prfile.user.first_name |slice:"1"}}</h6>
+                      <p class="mb-0 text-xs">{{prfile.user.email}}</p>
                     </div>
-                    <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto" href="/user/{{user.id}}">Профиль</a>
+                    <a class="btn btn-link pe-3 ps-0 mb-0 ms-auto w-25 w-md-auto" href="/user/{{prfile.user.id}}">Профиль</a>
                   </li>
                   {% endfor %}
                 </ul>

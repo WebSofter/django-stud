@@ -67,7 +67,7 @@ INSTALLED_APPS = [
     "blog",
     "user",
     "home",
-        'django_ckeditor_5',
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [

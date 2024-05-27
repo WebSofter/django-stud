@@ -1,11 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django import forms
-from .models import Profile
+from .models import Profile, Role
 from django.utils.translation import gettext_lazy as _
 from django. contrib.auth.admin import User
 
 class ProfileFormUpdation(forms.ModelForm):
+    role = forms.ModelChoiceField(queryset=Role.objects.all(),
+                                      empty_label="Выбрать роль",
+                                      widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Категория'},)
+                                    )
     class Meta:
         # Пол
         MALE = "M"
@@ -18,13 +22,17 @@ class ProfileFormUpdation(forms.ModelForm):
         )
 
         model = Profile
-        fields = ('photo', 'gender', 'birth_date', 'balance', 'tg_chat', 'tg_token')
+        fields = ('photo', 'role', 'gender', 'birth_date', 'balance', 'tg_chat', 'tg_token')
 
         widgets = {
             'photo': forms.FileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Фотография',
                 'title': 'Фото пользователя',
+            }),
+            'role': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Роль',
             }),
             'gender': forms.Select(choices=GENDER_CHOICES, attrs={
                 'class': 'form-control',

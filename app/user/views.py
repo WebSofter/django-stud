@@ -1,7 +1,7 @@
 from ast import dump
 import json
 import pprint
-from .models import Profile
+from .models import Profile, Role
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django. contrib.auth.admin import User
@@ -25,41 +25,74 @@ def UserViewList(request):
 #   else:
 #     form = PostForm()
   #
-  users = User.objects.all
+  profiles = Profile.objects.all()
   # return render (request, 'blog/blog.html', t'post_list': posts})
-  return render(request, 'user_list.html', { 'segment': 'user', 'users': users, })
+  return render(request, 'user_list.html', { 'segment': 'user', 'profiles': profiles, })
 
 class UserViewDetail(LoginRequiredMixin, View):
-
     template_name = 'user_detail.html'
-    context = {}
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs.get("id") if self.kwargs.get("id") else request.user.id
+        print(id)
+        roles = Role.objects.all
+        #
+        user = get_object_or_404(User, id = id)
+        profile = get_object_or_404(Profile, user_id=id)
+        #
+        profileForm = ProfileFormUpdation(instance = profile,)
+        userForm = UserFormUpdation(instance = user,)
+        # pprint.pprint(vars(profile))
+        return render(request, self.template_name, {'user': user, 'profile': profile, 'profileForm': profileForm, 'userForm': userForm})
+
+class UserViewUpdation(LoginRequiredMixin, View):
+    template_name = 'user_update.html'
 
     def get(self, request, *args, **kwargs):
-        profile = get_object_or_404(Profile, user = self.kwargs.get("id"))
-        user = get_object_or_404(User, id = self.kwargs.get("id"))
+        id = self.kwargs.get("id") if self.kwargs.get("id") else request.user.id
+        roles = Role.objects.all
         #
-        profileForm = ProfileFormUpdation(instance = user,)
+        user = get_object_or_404(User, id = id)
+        profile = get_object_or_404(Profile, user_id=id)
+        #
+        profileForm = ProfileFormUpdation(instance = profile,)
         userForm = UserFormUpdation(instance = user,)
-        pprint.pprint(vars(profile))
+        # pprint.pprint(vars(profile))
         return render(request, self.template_name, {'user': user, 'profile': profile, 'profileForm': profileForm, 'userForm': userForm})
     
     def post(self, request, *args, **kwargs):
-        old_profile = get_object_or_404(Profile, user = self.kwargs.get("id"))
-        old_user = get_object_or_404(User, id = self.kwargs.get("id"))
-        profileForm = ProfileFormUpdation(request.POST, request.FILES, instance=old_user)
+        id = self.kwargs.get("id") if self.kwargs.get("id") else request.user.id
+        #
+        old_user = get_object_or_404(User, id = id)
+        old_profile = get_object_or_404(Profile, user_id=id)
+        profileForm = ProfileFormUpdation(request.POST, request.FILES, instance=old_profile)
         userForm = UserFormUpdation(request.POST, instance = old_user,)
         if profileForm.is_valid() and userForm.is_valid():
-            pprint.pprint(vars(userForm))
-            pprint.pprint(vars(profileForm))
+            # pprint.pprint(vars(userForm))
+            # pprint.pprint(vars(profileForm))
             user = userForm.save(commit=False)
             user.save()
-            # user.save_m2m()
+            userForm.save_m2m()
             #
             profile = profileForm.save(commit=False)
             profile.save()
             profileForm.save_m2m()
-            return redirect(to="user_detail", id=profile.id)
+            return redirect(to="user_detail", id=user.id)
         
         user = get_object_or_404(User, id = self.kwargs.get("id"))
         profile = get_object_or_404(Profile, user = self.kwargs.get("id"))
+        return render(request, self.template_name, {'user': user, 'profile': profile, 'profileForm': profileForm, 'userForm': userForm})
+
+class UserViewCreation(LoginRequiredMixin, View):
+    template_name = 'user_create.html'
+
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs.get("id") if self.kwargs.get("id") else request.user.id
+        roles = Role.objects.all
+        #
+        user = get_object_or_404(User, id = id)
+        profile = get_object_or_404(Profile, user_id=id)
+        #
+        profileForm = ProfileFormUpdation(instance = profile,)
+        userForm = UserFormUpdation(instance = user,)
+        # pprint.pprint(vars(profile))
         return render(request, self.template_name, {'user': user, 'profile': profile, 'profileForm': profileForm, 'userForm': userForm})

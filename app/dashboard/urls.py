@@ -11,8 +11,11 @@ from django.conf import settings
 urlpatterns = [
     path('', views.index, name='index'),
     #user
-    path('user/', user_views.UserViewList, name='user'),
+    path('user/list', user_views.UserViewList, name='user'),
+    path('user/create', user_views.UserViewCreation.as_view(), name='user_create'),
     path('user/<str:id>', user_views.UserViewDetail.as_view(), name='user_detail'),
+    path('user/<str:id>/update', user_views.UserViewUpdation.as_view(), name='user_update'),
+    path('profile', user_views.UserViewDetail.as_view(), name='profile'),
 
     #blog
     path('blog/', blog_views.PostViewList, name='blog'),
@@ -37,7 +40,7 @@ urlpatterns = [
     path('vr/', views.vr, name='vr'),
     path('rtl/', views.rtl, name='rtl'),
     path('notification/', views.notification, name='notification'),
-    path('profile/', views.profile, name='profile'),
+    # path('profile/', views.profile, name='profile'),
 
     # Authentication
     path('accounts/login/', views.UserLoginView.as_view(), name='login'),
