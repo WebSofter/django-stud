@@ -3,6 +3,7 @@ from blog import views as blog_views
 from analysis import views as analysis_views
 from content import views as content_views
 from user import views as user_views
+from course import views as course_views
 from dashboard import views
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
@@ -10,6 +11,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='index'),
+    #course
+    path('course/list', course_views.CourseViewList.as_view(), name='course'),
+    path('course/create', course_views.CourseViewCreation.as_view(), name='course_create'),
+    path('course/<str:slug>', course_views.CourseViewDetail.as_view(), name='course_detail'),
+    path('course/<str:slug>/update', course_views.CourseViewUpdation.as_view(), name='course_update'),
+
     #user
     path('user/list', user_views.UserViewList, name='user'),
     path('user/create', user_views.UserViewCreation.as_view(), name='user_create'),

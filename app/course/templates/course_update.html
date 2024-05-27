@@ -1,0 +1,146 @@
+{% extends "./layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %} Блог {% endblock title %}
+
+{% block course %}
+
+    <div class="container-fluid px-2 px-md-4">
+      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
+        <span class="mask  bg-gradient-primary  opacity-6"></span>
+      </div>
+      <div class="card card-body mx-3 mx-md-4 mt-n6">
+        <div class="row gx-4 mb-2">
+          <div class="col-auto">
+            <div class="avatar avatar-xl position-relative">
+              <img src="{% static './img/userpic.png' %}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+            </div>
+          </div>
+          <div class="col-auto my-auto">
+            <div class="h-100">
+              <h5 class="mb-1">
+                {% if request.user.is_authenticated %}
+                {{request.user.username}}
+                {% endif %}
+              </h5>
+              <p class="mb-0 font-weight-normal text-sm">
+                {{ 'ваш курс' }} #{{ course.id }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-xl-12">
+          <div class="card-body">
+              <form role="form" method="post" action="{% url 'course_update' %}" enctype="multipart/form-data" novalidate>
+                {% csrf_token %} 
+                {% for field in form %}
+                <div class="input-group input-group-outline mb-3">
+                  {% if field.name == 'image' %}
+                    <div class="row">
+                      <div class="col-5">
+                        <figure class="figure" style="width:200px;height:auto;">
+                          <img src="/media/{{course.image}}" class="figure-img img-fluid rounded" alt="{{course.title}}">
+                          <figcaption class="figure-caption text-end">Главное фото</figcaption>
+                        </figure>
+                      </div>
+                      <div class="col-7">
+                        {{ field }}
+                      </div>
+                    </div>
+                  {% elif field.name == 'file' %}
+                    <div class="row">
+                      <div class="col-5">
+                        <figure class="figure" style="width:200px;height:auto;">
+                          {% if course.type == 'VIDEO' %}
+                            <video width="100%"  controls>
+                              <source src="/media/{{course.file}}" type="video/mp4">
+                              <source src="/media/{{course.file}}" type="video/ogg">
+                              Ваш броузер не поддерживате данный формат.
+                            </video>
+                            <figcaption class="figure-caption text-end">Видео к курсу</figcaption>
+                          {% elif course.type == 'IMAGE'  %}
+                            <img src="/media/{{course.file}}" class="figure-img img-fluid rounded" alt="{{course.title}}">
+                            <figcaption class="figure-caption text-end">Фото к курсу</figcaption>
+                          {% else %}
+                            <a heref="{{course.file}}" download title="Скачать {{course.file}}">
+                              <img src="{% static 'img/filepic.png' %}" class="figure-img img-fluid rounded" alt="Скачать {{course.title}}">
+                            </a>
+                            <figcaption class="figure-caption text-end">Файл к курсу</figcaption>
+                          {% endif %}
+                        </figure>
+                      </div>
+                      <div class="col-7">
+                        {{ field }}
+                      </div>
+                    </div>
+                  {% else %}
+                    {{ field }}
+                  {% endif %}
+                </div>
+                <span class="text-danger">{{ field.errors }}</span>
+                {% endfor %}
+                <div class="text-center">
+                  <button type="submit" name="register" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Обновить</button>
+                </div>         
+              </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="row">
+            <div class="col-12 col-xl-8">
+              <div class="card card-plain h-100">
+                <div class="card-header p-3"></div>
+                <div class="card-body p-3">
+                  <div class="row">
+                    {% for course in courses %}
+                    <div class="col-12 col-xl-6 col-md-6 mb-xl-0 mb-4">
+                      <div class="card card-course card-plain">
+                        <div class="card-header p-0 mx-3">
+                          <a class="d-block shadow-xl border-radius-xl">
+                            <img src="{% static 'img/home-decor-1.jpg' %}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                          </a>
+                        </div>
+                        <div class="card-body p-3">
+                          <p class="mb-0 text-sm">{{ course.category.name }}</p>
+                          <a href="javascript:;">
+                            <h5>
+                              {{ course.title }}
+                            </h5>
+                          </a>
+                          <p class="mb-4 text-sm">
+                            {{ course.text|truncatechars:100 }}
+                          </p>
+                          <div class="d-flex align-items-center justify-course-between">
+                            <button type="button" class="btn btn-outline-primary btn-sm mb-0">Читать еще</button>
+                            <div class="avatar-group mt-2">
+                              <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Elena Morison">
+                                <img alt="Image placeholder" src="{% static 'img/team-1.jpg' %}">
+                              </a>
+                              <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ryan Milly">
+                                <img alt="Image placeholder" src="{% static 'img/team-2.jpg' %}">
+                              </a>
+                              <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Nick Daniel">
+                                <img alt="Image placeholder" src="{% static 'img/team-3.jpg' %}">
+                              </a>
+                              <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Peterson">
+                                <img alt="Image placeholder" src="{% static 'img/team-4.jpg' %}">
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include './includes/footer.html' %}
+  </div>
+
+  {% endblock course %}

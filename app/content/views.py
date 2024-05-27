@@ -67,7 +67,7 @@ class ContentViewUpdation(LoginRequiredMixin, View):
             content_update_form.save_m2m()
 
             messages.success(self.request, f"Пост обновлен удачно.")
-            return redirect(to="content:content_detail", slug=content.slug)
+            return redirect(to="content_detail", slug=content.slug)
 
         self.context_object["content"] = content_update_form
         messages.error(request, "Пожалуйста, заполните все необходимые поля")

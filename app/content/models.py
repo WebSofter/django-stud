@@ -40,7 +40,6 @@ class Content(models.Model):
     file = models.FileField(verbose_name='Файл', null=True, blank=True, upload_to='uploads/')
     image = models.ImageField(verbose_name='Фото', null=True, blank=True, default='default.png', upload_to='uploads/')
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='RECIPE')
-    price = models.FloatField(null=True, blank=True, default=0.0)
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
