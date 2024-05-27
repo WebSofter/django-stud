@@ -1,0 +1,58 @@
+{% extends "./layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %} Блог {% endblock title %}
+
+{% block content %}
+
+    <div class="container-fluid px-2 px-md-4">
+      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
+        <span class="mask  bg-gradient-primary  opacity-6"></span>
+      </div>
+      <div class="card card-body mx-3 mx-md-4 mt-n6">
+        <div class="row gx-4 mb-2">
+          <div class="col-auto">
+            <div class="avatar avatar-xl position-relative">
+              <img src="{% static './img/userpic.png' %}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+            </div>
+          </div>
+          <div class="col-auto my-auto">
+            <div class="h-100">
+              <h5 class="mb-1">
+                {% comment %} Richard Davis {% endcomment %}
+                {% if request.user.is_authenticated %}
+                {{request.user.username}}
+                {% endif %}
+              </h5>
+              <p class="mb-0 font-weight-normal text-sm">
+                {{ 'ваш контент' }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-xl-12">
+          <div class="card-body">
+              <form role="form" method="POST" action="{% url 'content_create' %}" id="articleForm" enctype="multipart/form-data" novalidate>
+                {% csrf_token %} 
+                {% for field in form %}
+                <div class="input-group input-group-outline mb-3">
+                  {{ field }}
+                </div>
+                <span class="text-danger">{{ field.errors }}</span>
+                {% endfor %}
+                <div class="text-center row g-3">
+                  <div class="col-auto">
+                    <button type="submit" name="action" value="SAVE"
+                      class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Создать</button>
+                  </div>
+                  <div class="col-auto"></div>
+                </div>         
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include './includes/footer.html' %}
+  </div>
+
+  {% endblock content %}

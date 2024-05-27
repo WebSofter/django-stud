@@ -42,14 +42,18 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{% static 'css/material-dashboard.css' %}" rel="stylesheet" />
+  
+  <!-- CKEDITOR 5-->
+  <script src="{% static 'django_ckeditor_5/dist/bundle.js' %}" crossorigin="anonymous"></script>
+  <link href="{% static 'django_ckeditor_5/dist/styles.css' %}" rel="stylesheet" />
 
   {% block extrastyle %}{% endblock extrastyle %}
-<style>
-  .carousel-caption {
-    background-color: white;
-    border-radius: 10px;
-  }
-</style>
+  <style>
+    .carousel-caption {
+      background-color: white;
+      border-radius: 10px;
+    }  
+  </style>
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">

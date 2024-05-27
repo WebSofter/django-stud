@@ -60,11 +60,12 @@ $ apt-get install gcc default-libmysqlclient-dev pkg-config -y
    ```bash
    $ pip install -r requirements.txt
    ```
-4. Инициализируем и мигрируем БД
+4. Инициализируем статику и мигрируем БД
 
    ```bash
    $ python manage.py makemigrations
    $ python manage.py migrate
+   $ python manage.py collectstatic
    ```
 5. Создаем суперюзера
 
