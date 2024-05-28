@@ -38,18 +38,18 @@ class Course(models.Model):
     def _str_(self):
         return self.title
 
-class CourseContent(models.Model):
-    '''контент курса'''
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    content = models.ForeignKey(Content, on_delete=models.CASCADE)
+# class CourseContent(models.Model):
+#     '''контент курса'''
+#     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+#     content = models.ForeignKey(Content, on_delete=models.CASCADE)
 
-class UserCourseProgress(models.Model):
-    '''прогресс прохождения'''
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course_content = models.ForeignKey(CourseContent, on_delete=models.CASCADE)
-    is_completed = models.BooleanField(default=False)
+# class UserCourseProgress(models.Model):
+#     '''прогресс прохождения'''
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     course_content = models.ForeignKey(CourseContent, on_delete=models.CASCADE)
+#     is_completed = models.BooleanField(default=False)
 
-class UserCourseSubscription(models.Model):
-    '''подписка на курсы'''
-    course= models.ForeignKey(Course, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+# class UserCourseSubscription(models.Model):
+#     '''подписка на курсы'''
+#     course= models.ForeignKey(Course, on_delete=models.CASCADE)
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
