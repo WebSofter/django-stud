@@ -7,14 +7,20 @@ from django.utils.translation import gettext_lazy as _
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 class CourseFormCreation(forms.ModelForm):
+
     category = forms.ModelChoiceField(queryset=Category.objects.all(), #filter(approved=True),
                                       empty_label="Выбрать категорию",
                                       widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Категория'},)
                                     )
-    # content = forms.ModelMultipleChoiceField(
-    #     queryset=Content.objects.all(),
-    #     # widget=FilteredSelectMultiple("verbose name", is_stacked=False)
-    # )
+    class CustomMMCF(forms.ModelMultipleChoiceField):
+        def label_from_instance(self, content):
+            return f"{content.type} - {content.title}"
+
+    content = CustomMMCF(
+        queryset=Content.objects.all(), #get(id=id),
+        widget=forms.CheckboxSelectMultiple
+        # widget=FilteredSelectMultiple("verbose name", is_stacked=False)
+    )
     class Meta:
         
         model = Course
@@ -29,11 +35,11 @@ class CourseFormCreation(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Категория',
             }),
-            # 'content': forms.CheckboxSelectMultiple(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Контент',
-            #     'title': 'Контент курса',
-            # }),
+            'content': forms.CheckboxSelectMultiple(attrs={
+                'class': 'form-control',
+                'placeholder': 'Контент',
+                'title': 'Контент курса',
+            }),
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Фотография',
@@ -58,10 +64,9 @@ class CourseFormUpdation(forms.ModelForm):
                                       empty_label="Выбрать категорию",
                                       widget=forms.Select(attrs={'class': 'form-control', 'placeholder': 'Категория'},)
                                     )
-    # content = forms.ModelMultipleChoiceField(
-    #     queryset=Content.objects.all(),
-    #     # widget=FilteredSelectMultiple("verbose name", is_stacked=False)
-    # )
+    class CustomMMCF(forms.ModelMultipleChoiceField):
+        def label_from_instance(self, content):
+            return f"{content.type} - {content.title}"
     class Meta:
         
         model = Course
@@ -76,11 +81,11 @@ class CourseFormUpdation(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Категория',
             }),
-            # 'content': forms.CheckboxSelectMultiple(attrs={
-            #     'class': 'form-control',
-            #     'placeholder': 'Контент',
-            #     'title': 'Контент курса',
-            # }),
+            'content': forms.CheckboxSelectMultiple(attrs={
+                'class': 'form-control',
+                'placeholder': 'Контент',
+                'title': 'Контент курса',
+            }),
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Фотография',

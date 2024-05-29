@@ -10,11 +10,10 @@ from .forms import CourseFormCreation, CourseFormUpdation
 from .models import Category, Course
 
 class CourseViewList(LoginRequiredMixin, View):
-    template_name = 'course_create.html'
     def get(self, request, *args, **kwargs):
         courses = Course.objects.all
         categories = Category.objects.all
-        return render(request, self.template_name, {'segment': 'course', 'courses': courses, 'categories': categories, })
+        return render(request, 'course_list.html', {'segment': 'course', 'courses': courses, 'categories': categories, })
 
 
 class CourseViewCreation(LoginRequiredMixin, View):

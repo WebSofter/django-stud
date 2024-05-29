@@ -73,9 +73,9 @@ class PostViewUpdation(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
 
         old_post = get_object_or_404(Post, slug=self.kwargs.get("slug"))
-        post_update_form = PostFormUpdation(instance=old_post, initial={'tags': old_post.tags.names})
+        post_update_form = PostFormUpdation(instance=old_post,)
 
-        self.context_object["post_update_form"] = post_update_form
+        self.context_object["form"] = post_update_form
         self.context_object["post"] = old_post
         return render(request, self.template_name, self.context_object)
 

@@ -25,7 +25,7 @@ class Course(models.Model):
     )
     price = models.FloatField(null=True, blank=True, default=0.0)
     date_created = models.DateTimeField(auto_now_add=True)
-
+    content = models.ManyToManyField(Content, blank=True, related_name='courses')
     class Meta:
         unique_together = ("title",)
         ordering = ('-date_created',)
