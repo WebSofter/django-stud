@@ -52,6 +52,18 @@ RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:    
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_HOST_USER = 'mail.websofter@yandex.ru'
+EMAIL_HOST_PASSWORD = 'xtusgqtykaopfyro'
+EMAIL_PORT = 587
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -212,7 +224,6 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_REDIRECT_URL = '/'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 customColorPalette = [

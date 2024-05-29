@@ -64,7 +64,7 @@
                       {{ course.text | safe }}
                     </p>
                     <p>
-                      <a class="btn btn-primary" href="javascript:;">Пройти курс</a>
+                      <a class="btn btn-primary" href="/course/{{course.slug}}/email?email={{request.user.email}}&slug={{course.slug}}">Пройти курс</a>
                     </p>
                   </div>
                 </div>

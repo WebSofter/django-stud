@@ -20,7 +20,7 @@
             <div class="h-100">
               <h5 class="mb-1">
                 {% comment %} Richard Davis {% endcomment %}
-                {% if request.user.is_authenticated %}
+                {% if request.user.is_authenticated and request.user.is_superuser %}
                 {{request.user.username}}
                 {% endif %}
               </h5>

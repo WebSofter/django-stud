@@ -8,6 +8,17 @@ from django.views.generic import (
 )
 from .forms import CourseFormCreation, CourseFormUpdation
 from .models import Category, Course
+from django.core.mail import send_mail
+class CourseViewEmail(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        send_mail(
+            "Уведомление о курсе",
+            "Это сообщение отправлено с сайта MedStat. Вам предложено пройти курс по ссылке https://medstat.skillka.ru/course/" + self.kwargs.get("slug"),
+            "mail.websofter@yandex.ru",
+            [request.user.email],
+            fail_silently=False,
+        )
+        return render(request, 'course_email.html',)
 
 class CourseViewList(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):

@@ -17,7 +17,7 @@ class CourseFormCreation(forms.ModelForm):
             return f"{content.type} - {content.title}"
 
     content = CustomMMCF(
-        queryset=Content.objects.all(), #get(id=id),
+        queryset= Content.objects.all(), #get(id=id),
         widget=forms.CheckboxSelectMultiple
         # widget=FilteredSelectMultiple("verbose name", is_stacked=False)
     )
@@ -56,7 +56,9 @@ class CourseFormCreation(forms.ModelForm):
         }
     
     def __init__(self, *args, **kwargs):
+        #self.request = kwargs.pop('request')
         super().__init__(*args, **kwargs)
+        #self.fields['content'].queryset = Content.objects.filter(user=self.request.user)
         self.fields["text"].required = False
 
 class CourseFormUpdation(forms.ModelForm):

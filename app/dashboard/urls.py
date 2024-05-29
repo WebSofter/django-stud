@@ -16,6 +16,7 @@ urlpatterns = [
     path('course/create', course_views.CourseViewCreation.as_view(), name='course_create'),
     path('course/<str:slug>', course_views.CourseViewDetail.as_view(), name='course_detail'),
     path('course/<str:slug>/update', course_views.CourseViewUpdation.as_view(), name='course_update'),
+    path('course/<str:slug>/email', course_views.CourseViewEmail.as_view(), name='course_email'),
 
     #user
     path('user/list', user_views.UserViewList, name='user'),
