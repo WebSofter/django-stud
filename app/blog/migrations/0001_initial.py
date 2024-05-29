@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('DRAFTED', 'Черновик'), ('PUBLISHED', 'Опубликован')], default='DRAFT', max_length=10)),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('date_updated', models.DateTimeField(auto_now=True)),
-                ('image', models.ImageField(blank=True, default='post-default.jpg', null=True, upload_to='uploads/')),
+                ('image', models.ImageField(blank=True, default='default.jpg', null=True, upload_to='uploads/')),
                 ('category', models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='blog.category', verbose_name='Категория')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to=settings.AUTH_USER_MODEL)),
             ],

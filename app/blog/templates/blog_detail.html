@@ -15,7 +15,14 @@
             <div class="col-12 col-xl-8">
               <div class="card card-plain h-100">
                 <div class="card-header p-3">
-                  <h5>{{ post.title }}</h5>
+                  <h5>
+                    {% if request.user.is_authenticated and post.user_id == request.user.id or request.user.is_superuser%}
+                    <a href="/blog/{{post.slug}}/update">
+                      <i class="fas fa-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Изменить"></i>
+                    </a>
+                    {% endif %}
+                    {{ post.title }}
+                  </h5>
                   <p class="mb-0 text-sm">{{ post.category.name }}</p>
                 </div>
                 <div class="card-body p-3">
@@ -24,7 +31,11 @@
                       <div class="card card-blog card-plain">
                         <div class="card-header p-0 mx-3">
                           <a class="d-block border-radius-xl">
-                            <img src="/media/{{ post.image }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                            {% if post.image == 'default.jpg' %}
+                              <img src="{% static post.image %}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                            {% else %}
+                              <img src="/media/{{ post.image }}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                            {% endif %}
                           </a>
                         </div>
                         <div class="card-body p-3">

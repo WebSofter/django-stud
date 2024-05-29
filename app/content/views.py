@@ -15,7 +15,12 @@ from .models import Category, Content
 
 def ContentViewList(request):
   '''вывод записей'''
-  contents = Content.objects.all
+  contents = []
+  if request.user.is_superuser:
+    contents = Content.objects.all
+  else:
+    contents = Content.objects.filter(user_id=request.user.id)
+    
   categories = Category.objects.all
   return render(request, 'content_list.html', { 'segment': 'content', 'contents': contents, 'categories': categories, })
 

@@ -41,7 +41,7 @@
                       <td>{{a.steps_pd}}</td>
                       <td>{{a.date_created}}</td>
                       <td class="text-right">
-                        {% if request.user.is_authenticated %}
+                        {% if request.user.is_authenticated and a.user_id == request.user.id or request.user.is_superuser %}
                         <a href="{{a.id}}/update">
                           <i class="fas fa-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Изменить"></i>
                         </a>

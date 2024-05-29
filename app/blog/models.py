@@ -46,7 +46,7 @@ class Post(models.Model):
     )
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    image = models.ImageField(null=True, blank=True, default='post-default.jpg', upload_to='uploads/')
+    image = models.ImageField(null=True, blank=True, default='default.jpg', upload_to='uploads/')
 
     class Meta:
         unique_together = ("title",)

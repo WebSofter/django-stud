@@ -11,7 +11,12 @@ from .models import Category, Course
 
 class CourseViewList(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
-        courses = Course.objects.all
+        courses = []
+        if request.user.is_superuser:
+            courses = Course.objects.all
+        else:
+            courses = Course.objects.filter(user_id=request.user.id)
+        
         categories = Category.objects.all
         return render(request, 'course_list.html', {'segment': 'course', 'courses': courses, 'categories': categories, })
 

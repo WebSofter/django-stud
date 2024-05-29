@@ -15,8 +15,11 @@ from .models import Analysis
 
 def AnalysisViewList(request):
   '''вывод записей'''
-  analysis = Analysis.objects.all
-  # return render (request, 'analysis/analysis.html', t'analysis_list': analysiss})
+  analysis = []
+  if request.user.is_superuser:
+    analysis = Analysis.objects.all
+  else:
+    analysis = Analysis.objects.filter(user_id=request.user.id)
   return render(request, 'analysis_list.html', { 'segment': 'analysis', 'analysis': analysis,})
 
 

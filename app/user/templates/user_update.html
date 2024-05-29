@@ -41,10 +41,18 @@
                 <span class="text-danger">{{ field.errors }}</span>
                 {% endfor %}
                 {% for field in profileForm %}
-                <div class="input-group input-group-outline mb-3">
-                  {{ field }}
-                </div>
-                <span class="text-danger">{{ field.errors }}</span>
+                  {% if field.name == 'role'%}
+                      {% if request.user.is_superuser %}
+                        <div class="input-group input-group-outline mb-3">
+                          {{ field }}
+                        </div>
+                      {% endif %}
+                  {% else %}
+                    <div class="input-group input-group-outline mb-3">
+                      {{ field }}
+                    </div>
+                  {% endif %}
+                  <span class="text-danger">{{ field.errors }}</span>
                 {% endfor %}
                 <div class="text-center">
                   <button type="submit" name="save" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Обновить</button>

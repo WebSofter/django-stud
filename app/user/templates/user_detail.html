@@ -55,7 +55,9 @@
                 </ul>
                 <div class="card-body">
                   <a class="btn btn-link" href="/user/list" class="card-link">Назад</a>
+                  {% if user.id == request.user.id or request.user.is_superuser %}
                   <a class="btn btn-link" href="/user/{{user.id}}/update" class="card-link">Изменить</a>
+                  {% endif %}
                 </div>
               </div>
             </div>
