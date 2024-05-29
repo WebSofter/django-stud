@@ -10,11 +10,11 @@ class Analysis(models.Model):
         related_name='analysis',
     )
     
-    weight = models.FloatField(null=True, blank=True,)
-    girth = models.FloatField(null=True, blank=True,)
-    pulse = models.IntegerField(null=True, blank=True,)
-    calories_pd = models.IntegerField(null=True, blank=True,)
-    steps_pd = models.IntegerField(null=True, blank=True,)
+    weight = models.FloatField(null=False, blank=False, default=0.0)
+    girth = models.FloatField(null=False, blank=False, default=0.0)
+    pulse = models.IntegerField(null=False, blank=True, default=0)
+    calories_pd = models.IntegerField(null=True, blank=False, default=0)
+    steps_pd = models.IntegerField(null=False, blank=False, default=0)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
