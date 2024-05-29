@@ -35,7 +35,8 @@
               <form role="form" method="POST" action="{% url 'analysis_create' %}" id="articleForm" enctype="multipart/form-data" novalidate>
                 {% csrf_token %} 
                 {% for field in form %}
-                <div class="input-group input-group-outline mb-3">
+                {{field.name}}
+                <div class="input-group input-group-outline mb-3" title="{{field.name}}">
                   {{ field }}
                 </div>
                 <span class="text-danger">{{ field.errors }}</span>
