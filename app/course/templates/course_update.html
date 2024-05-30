@@ -39,7 +39,11 @@
                     <div class="row">
                       <div class="col-5">
                         <figure class="figure" style="width:200px;height:auto;">
-                          <img src="/media/{{course.image}}" class="figure-img img-fluid rounded" alt="{{course.title}}">
+                          {% if course.image == 'default.png' %}
+                            <img src="{% static 'img' %}/{{course.image}}" alt="img-blur-shadow" class="img-fluid border-radius-xl"/>
+                          {% else %}
+                            <img src="/media/{{ course.image }}" alt="img-blur-shadow" class="img-fluid border-radius-xl"/>
+                          {% endif %}
                           <figcaption class="figure-caption text-end">Главное фото</figcaption>
                         </figure>
                       </div>

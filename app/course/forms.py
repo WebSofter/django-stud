@@ -60,6 +60,7 @@ class CourseFormCreation(forms.ModelForm):
         super().__init__(*args, **kwargs)
         #self.fields['content'].queryset = Content.objects.filter(user=self.request.user)
         self.fields["text"].required = False
+        
 
 class CourseFormUpdation(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), #filter(approved=True),

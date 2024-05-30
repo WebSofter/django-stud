@@ -76,7 +76,7 @@ class AnalysisViewUpdation(LoginRequiredMixin, View):
             return redirect(to="analysis:analysis_detail", id=analysis.id)
 
         self.context_object["analysis"] = form
-        messages.error(request, "Пожалуйста, заполните все необходимые поля")
+        # messages.error(request, "Пожалуйста, заполните все необходимые поля")
         return render(request, self.template_name, self.context_object)
 
 class AnalysisViewDetail(DetailView):

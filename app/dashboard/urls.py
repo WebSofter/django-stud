@@ -30,7 +30,7 @@ urlpatterns = [
     path('role/<str:id>/update', user_views.RoleViewUpdation.as_view(), name='role_update'),
 
     #blog
-    path('blog/', blog_views.PostViewList, name='blog'),
+    path('blog/', blog_views.PostViewList.as_view(), name='blog'),
     path('blog/create', blog_views.PostViewCreation.as_view(), name='blog_create'),
     path('blog/<str:slug>', blog_views.PostViewDetail.as_view(), name='blog_detail'),
     path('blog/<str:slug>/update', blog_views.PostViewUpdation.as_view(), name='blog_update'),

@@ -36,12 +36,16 @@
                 <div class="card card-course card-plain">
                   <div class="card-header p-0 mx-3 text-left">
                     <a class="d-block border-radius-xl">
-                      <img style="max-width:450px;" src="/media/{{ course.image }}" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl ">
+                      {% if course.image == 'default.png' %}
+                        <img src="{% static 'img' %}/{{course.image}}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                      {% else %}
+                        <img src="/media/{{ course.image }}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                      {% endif %}
                     </a>
                   </div>
                   <div class="card-body p-3">
                     {% for content in course.contents %}
-                    <figure class="figure" style="width:100%;height:auto; text-center">
+                    <figure class="figure" style="width:100%;height:auto;text-center">
                       {% if content.type == 'VIDEO' %}
                         <video width="100%"  controls>
                           <source src="/media/{{course.file}}" type="video/mp4">

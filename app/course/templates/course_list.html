@@ -25,11 +25,17 @@
                   <div class="card card-course card-plain">
                     <div class="card-header p-0 mx-3">
                       <a href="/course/{{course.slug}}" class="d-block border-radius-xl">
-                        <img src="/media/{{ course.image }}" alt="img-blur-shadow" class="card-img-top img-fluid shadow border-radius-xl">
+                        <!-- <img src="/media/{{ course.image }}" alt="img-blur-shadow" class="card-img-top img-fluid shadow border-radius-xl"> -->
+                        {% if course.image == 'default.png' %}
+                          <img src="{% static 'img' %}/{{course.image}}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                        {% else %}
+                          <img src="/media/{{ course.image }}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                        {% endif %}
                       </a>
                     </div>
                     <div class="card-body p-3">
-                      <p class="mb-0 text-sm">{{ course.category.name }}</p>
+                      <p class="mb-0 text-sm">Категория: <b>{{ course.category.name }}</b></p>
+                      <p class="mb-0 text-sm">Автор: <b></b>{{ course.user.username }}</b></p>
                       <h5>
                         {% comment %} {% if request.user.is_authenticated %}
                         <a href="/{{course.slug}}/update">
@@ -80,10 +86,10 @@
                     <!--<img src="{% static 'img/kal-visuals-square.jpg' %}" alt="kal" class="border-radius-lg shadow">-->
                     <i class="material-icons opacity-10 text-dark">comcourse</i>
                   </div>
-                  <div class="d-flex align-items-start flex-column justify-course-center">
-                    <h6 class="mb-0 text-sm">{{category.name}}.</h6>
-                  </div>
-                  <a class="btn btn-link ps-0 mb-0 ms-auto w-25 w-md-auto" href="javascript:;">смотреть</a>
+                  <h6 class="mb-0 text-sm">
+                    <a class="btn btn-link ps-0 mb-0 ms-auto w-25 w-md-auto" href="/course/?category={{category.id}}">{{category.name}}</a>
+                  </h6>
+                  <a class="btn btn-link ps-0 mb-0 ms-auto w-25 w-md-auto" href="javascript:;"></a>
                 </li>
                 {% endfor %}
               </ul>

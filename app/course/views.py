@@ -9,6 +9,7 @@ from django.views.generic import (
 from .forms import CourseFormCreation, CourseFormUpdation
 from .models import Category, Course
 from django.core.mail import send_mail
+
 class CourseViewEmail(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         send_mail(
@@ -21,6 +22,7 @@ class CourseViewEmail(LoginRequiredMixin, View):
         return render(request, 'course_email.html',)
 
 class CourseViewList(LoginRequiredMixin, View):
+    
     def get(self, request, *args, **kwargs):
         courses = []
         if request.user.is_superuser:
@@ -52,7 +54,7 @@ class CourseViewCreation(LoginRequiredMixin, View):
             return redirect(to="course_detail", slug=course.slug)
 
         self.context["form"] = form_creation
-        messages.error(request, "Пожалуйста, заполните все неоходимые поля")
+        #messages.error(request, "Пожалуйста, заполните все неоходимые поля")
         return render(request, self.template_name, self.context)
 
 
@@ -84,7 +86,8 @@ class CourseViewUpdation(LoginRequiredMixin, View):
             return redirect(to="course:course_detail", slug=course.slug)
 
         self.context_object["course"] = course_update_form
-        messages.error(request, "Пожалуйста, заполните все необходимые поля")
+        self.context_object["form"] = course_update_form
+        #messages.error(request, "Пожалуйста, заполните все необходимые поля")
         return render(request, self.template_name, self.context_object)
 
 

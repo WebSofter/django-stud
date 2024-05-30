@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
 
-      {% admin_get_menu as app_list %}
+      <!-- {% admin_get_menu as app_list %}
       {% if app_list %}
           {% for app in app_list %}
               {% if app.has_perms and not app.pinned %}
@@ -48,16 +48,16 @@
                 </li>
               {% endif %}
           {% endfor %}
-      {% endif %}
+      {% endif %} -->
 
         <li class="nav-item">
 
-            {% if request.user.is_superuser %}
+            <!-- {% if request.user.is_superuser %}
             <a href="{% url 'admin:index' %}" class="nav-link text-white {% if 'index' in segment %} active {% endif %}">
             {% else %}
             <a href="{% url 'index' %}" class="nav-link text-white {% if 'index' in segment %} active {% endif %}">
-            {% endif %}
-
+            {% endif %} -->
+            <a href="{% url 'index' %}" class="nav-link text-white {% if 'index' in segment %} active {% endif %}">
                 <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                     <svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                     <title>shop </title>
@@ -88,7 +88,7 @@
         </li>
         -->
 
-        {% if request.user.is_authenticated and not request.user.is_superuser %}
+        {% if request.user.is_authenticated %}
       <!--
         <li class="nav-item">
           <a class="nav-link text-white {% if 'tables' in segment %} active {% endif %} " href="{% url 'tables' %}">

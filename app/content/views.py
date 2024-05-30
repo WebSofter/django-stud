@@ -45,7 +45,7 @@ class ContentViewCreation(LoginRequiredMixin, View):
             return redirect(to="content_detail", slug=content.slug)
 
         self.context["form"] = form_creation
-        messages.error(request, "Пожалуйста, заполните все неоходимые поля")
+        #messages.error(request, "Пожалуйста, заполните все неоходимые поля")
         return render(request, self.template_name, self.context)
 
 class ContentViewUpdation(LoginRequiredMixin, View):
@@ -75,7 +75,7 @@ class ContentViewUpdation(LoginRequiredMixin, View):
             return redirect(to="content_detail", slug=content.slug)
 
         self.context_object["content"] = content_update_form
-        messages.error(request, "Пожалуйста, заполните все необходимые поля")
+        #messages.error(request, "Пожалуйста, заполните все необходимые поля")
         return render(request, self.template_name, self.context_object)
 
 class ContentViewDetail(DetailView):

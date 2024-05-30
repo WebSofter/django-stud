@@ -13,25 +13,19 @@ from .forms import PostFormCreation, PostFormUpdation
 # from forms import PostFormCreation
 from .models import Category, Post
 
-def PostViewList(request):
-  '''вывод записей'''
-  #
-#   if request.method == 'POST':
-#     form = PostForm(request.POST)
-#     form.save()
-#     return redirect('/blog/')
-#     # if form.is_valid():
-#     #   form.save()
-#     #   return redirect('/blog/')
-#     # else:
-#     #   print("Не заполнены нужные поля")
-#   else:
-#     form = PostForm()
-  #
-  posts = Post.objects.all
-  categories = Category.objects.all
-  # return render (request, 'blog/blog.html', t'post_list': posts})
-  return render(request, 'blog_list.html', { 'segment': 'blog', 'posts': posts, 'categories': categories, })
+class PostViewList(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        categories = []
+        category = request.GET.get("category")
+        
+        if category:
+            posts = Post.objects.filter(category_id=category)
+        else:
+            posts = Post.objects.all
+
+        categories = Category.objects.all
+        # return render (request, 'blog/blog.html', t'post_list': posts})
+        return render(request, 'blog_list.html', { 'segment': 'blog', 'posts': posts, 'categories': categories, })
 
 
 class PostViewCreation(LoginRequiredMixin, View):
@@ -59,7 +53,7 @@ class PostViewCreation(LoginRequiredMixin, View):
             return redirect(to="blog_detail", slug=post.slug)
 
         self.context["form"] = form_creation
-        messages.error(request, "Пожалуйста, заполните все неоходимые поля")
+        # messages.error(request, "Пожалуйста, заполните все неоходимые поля")
         return render(request, self.template_name, self.context)
 
 class PostViewUpdation(LoginRequiredMixin, View):
@@ -100,7 +94,7 @@ class PostViewUpdation(LoginRequiredMixin, View):
             return redirect(to="blog:blog_detail", slug=post.slug)
 
         self.context_object["post"] = post_update_form
-        messages.error(request, "Пожалуйста, заполните все необходимые поля")
+        # messages.error(request, "Пожалуйста, заполните все необходимые поля")
         return render(request, self.template_name, self.context_object)
 
 class PostViewDetail(DetailView):
