@@ -25,6 +25,10 @@ urlpatterns = [
     path('user/<str:id>/update', user_views.UserViewUpdation.as_view(), name='user_update'),
     path('profile', user_views.UserViewDetail.as_view(), name='profile'),
 
+    #role
+    path('role/create', user_views.RoleViewCreation.as_view(), name='role_create'),
+    path('role/<str:id>/update', user_views.RoleViewUpdation.as_view(), name='role_update'),
+
     #blog
     path('blog/', blog_views.PostViewList, name='blog'),
     path('blog/create', blog_views.PostViewCreation.as_view(), name='blog_create'),

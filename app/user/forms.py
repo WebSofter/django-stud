@@ -64,3 +64,15 @@ class UserFormUpdation(forms.ModelForm):
                 'placeholder': 'Фамилия',
             }),
         }
+
+
+class RoleFormBase(forms.ModelForm):
+    class Meta:
+        model = Role
+        fields = ('name',)
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Название',
+            }),
+        }

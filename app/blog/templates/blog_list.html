@@ -12,7 +12,7 @@
         <div class="col-12 col-xl-8">
           <div class="card card-plain h-100">
             <div class="card-header p-3 mt-3">
-              {% if request.user.is_authenticated and request.user.is_superuser %}
+              {% if request.user.is_authenticated %}
               <a href="/blog/create">
                 <i class="fas fa-plus text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Новый пост"></i> Добавить пост
               </a>
@@ -76,7 +76,16 @@
         <div class="col-12 col-xl-4">
           <div class="card card-plain h-100">
             <div class="card-header p-3 mt-3">
-              <h6 class="mb-0">Категории</h6>
+              <h6 class="mb-0">
+                {% if request.user.is_authenticated %}
+                <a href="/category/create">
+                  <i class="fas fa-plus text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Новая категория"></i>
+                  Добавить категорию
+                </a>
+                {% else %}
+                  Категории
+                {% endif %}
+              </h6>
             </div>
             <div class="card-body p-3">
               <ul class="list-group">

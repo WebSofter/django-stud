@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+{% load i18n static %}
+
+{% block title %} Profile {% endblock title %}
+
+{% block content %}
+
+    <div class="container-fluid px-2 px-md-4">
+      <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
+        <span class="mask  bg-gradient-primary  opacity-6"></span>
+      </div>
+      <div class="card card-body mx-3 mx-md-4 mt-n6">
+        <div class="row gx-4 mb-2">
+          <div class="col-auto">
+            <div class="avatar avatar-xl position-relative">
+              {% if profile.photo == 'userpic.png' %}
+                <img src="{% static 'img' %}/{{profile.photo}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              {% else %}
+                <img src="/media/{{user.photo}}" alt="profile_image" class="w-100 border-radius-lg shadow-sm">
+              {% endif %}
+            </div>
+          </div>
+          <div class="col-auto my-auto">
+            <div class="h-100">
+              <h5 class="mb-1">
+                Добавление роли
+              </h5>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+            <div class="nav-wrapper position-relative end-0">
+              <form role="form" method="post" action="{% url 'role_create' %}" enctype="multipart/form-data" novalidate>
+                {% csrf_token %} 
+                {% for field in form %}
+                  <div class="input-group input-group-outline mb-3">
+                    {{ field }}
+                  </div>
+                  <span class="text-danger">{{ field.errors }}</span>
+                {% endfor %}
+                <div class="text-center">
+                  <button type="submit" name="save" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Добавить</button>
+                </div>         
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include 'includes/footer.html' %}
+  </div>
+
+  {% endblock content %}

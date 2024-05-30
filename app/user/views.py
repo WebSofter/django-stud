@@ -7,27 +7,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django. contrib.auth.admin import User
 from django.views import View
 
-from .forms import UserFormUpdation, ProfileFormUpdation
+from .forms import RoleFormBase, UserFormUpdation, ProfileFormUpdation
 # Create your views here.
 
 def UserViewList(request):
   '''вывод записей'''
-  #
-#   if request.method == 'POST':
-#     form = PostForm(request.POST)
-#     form.save()
-#     return redirect('/blog/')
-#     # if form.is_valid():
-#     #   form.save()
-#     #   return redirect('/blog/')
-#     # else:
-#     #   print("Не заполнены нужные поля")
-#   else:
-#     form = PostForm()
-  #
   profiles = Profile.objects.all()
-  # return render (request, 'blog/blog.html', t'post_list': posts})
-  return render(request, 'user_list.html', { 'segment': 'user', 'profiles': profiles, })
+  admins = Profile.objects.filter(user__is_superuser=1)
+  staffs = Profile.objects.filter(role=None)
+  roles = Role.objects.all()
+  return render(request, 'user_list.html', { 'segment': 'user', 'profiles': profiles, 'admins': admins, 'statffs': staffs, 'roles': roles})
 
 class UserViewDetail(LoginRequiredMixin, View):
     template_name = 'user_detail.html'
@@ -96,3 +85,41 @@ class UserViewCreation(LoginRequiredMixin, View):
         userForm = UserFormUpdation(instance = user,)
         # pprint.pprint(vars(profile))
         return render(request, self.template_name, {'user': user, 'profile': profile, 'profileForm': profileForm, 'userForm': userForm})
+    
+class RoleViewCreation(LoginRequiredMixin, View):
+    template_name = 'role_create.html'
+
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(User, id = request.user.id)
+        role = get_object_or_404(Role, id = self.kwargs.get("id"))
+        #
+        form = RoleFormBase(instance = role,)
+        # pprint.pprint(vars(profile))
+        return render(request, self.template_name, { 'user': user, 'form': form, })
+    
+    def post(self, request, *args, **kwargs):
+        form = RoleFormBase(request.POST)
+        if form.is_valid():
+            role = form.save(commit=False)
+            role.save()
+            form.save_m2m()
+            return redirect(to="profile",)
+        return render(request, self.template_name, {'form': form})
+    
+class RoleViewUpdation(LoginRequiredMixin, View):
+    template_name = 'role_update.html'
+    def get(self, request, *args, **kwargs):
+        role = get_object_or_404(Role, id=self.kwargs.get("id"))
+        form = RoleFormBase(instance=role,)
+        return render(request, self.template_name, {'form': form, 'role': role})
+
+    def post(self, request, *args, **kwargs):
+        role = get_object_or_404(Role, id=self.kwargs.get("id"))
+        form = RoleFormBase(request.POST, request.FILES, instance=role)
+        if form.is_valid():
+            role = form.save(commit=False)
+            role.save()
+            form.save_m2m()
+            return redirect(to="role:role_update", id=role.id)
+
+        return render(request, self.template_name, {'form': form})

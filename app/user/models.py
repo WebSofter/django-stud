@@ -43,6 +43,7 @@ class Profile(models.Model):
     balance = models.FloatField(null=True, blank=True, default=0.0)
     tg_chat = models.CharField(verbose_name='ИД ТГ чата', max_length=100, null=True, blank=True, default=None)
     tg_token = models.CharField(verbose_name='ИД ТГ чата', max_length=150, null=True, blank=True, default=None)
+
     def _str_(self):
         return self.user.username
     

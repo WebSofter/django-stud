@@ -16,7 +16,7 @@
               <div class="card card-plain h-100">
                 <div class="card-header p-3">
                   <h5>
-                    {% if request.user.is_authenticated and post.user_id == request.user.id or request.user.is_superuser%}
+                    {% if request.user.is_authenticated and post.user_id == request.user.id %}
                     <a href="/blog/{{post.slug}}/update">
                       <i class="fas fa-edit text-secondary text-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Изменить"></i>
                     </a>
