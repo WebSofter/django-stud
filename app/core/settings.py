@@ -128,10 +128,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # )
 
 # STATIC_URL = "/static/" # Django will search for /static/
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "static"), # Django will search for /static/
-# ]
-STATIC_ROOT = "static/" # Basic configuration when using manage.py collectstatic
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"), # Django will search for /static/
+]
+# STATIC_ROOT = "static/" # Basic configuration when using manage.py collectstatic
 
 VALID_IMAGE_EXTENSIONS = [
     ".jpg",

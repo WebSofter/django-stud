@@ -26,7 +26,7 @@
                     <div class="card-header p-0 mx-3">
                       <a class="d-block border-radius-xl text-center overflow-hidden" style="height:250px">
                         {% if post.image == 'default.jpg' %}
-                          <img src="{% static post.image %}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
+                          <img src="{% static "img" %}/{{post.image}}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
                         {% else %}
                           <img src="/media/{{ post.image }}" alt="img-blur-shadow" class="img-fluid border-radius-xl">
                         {% endif %}

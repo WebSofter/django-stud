@@ -180,10 +180,10 @@
                         <td>
                           <div class="d-flex px-2 py-1">
                             <div>
-                              {% if course.image %}
-                                <img src="/media/{{ course.image }}" class="avatar avatar-sm me-3" alt="xd">
+                              {% if course.image == 'default.png' %}
+                                <img src="{% static 'img' %}/{{course.image}}" class="avatar avatar-sm me-3" alt="xd">
                               {% else %}
-                                <img src="{% static 'img/small-logos/logo-xd.svg' %}" class="avatar avatar-sm me-3" alt="xd">
+                                <img src="/media/{{ course.image }}" class="avatar avatar-sm me-3" alt="xd">
                               {% endif %}
                             </div>
                             <div class="d-flex flex-column justify-content-center">
